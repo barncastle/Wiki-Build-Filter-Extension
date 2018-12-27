@@ -1,0 +1,17 @@
+.client-nojs .build-filter-panel {
+	display: none; /* hide the dropdown when js is disabled */
+}
+
+.build-filter-image {
+	margin-left: 0.25em;
+	vertical-align: text-bottom;
+	max-height: 16px;
+}
+
+.build-filter-select {
+	min-width: 11em;
+}
+
+.client-js .build-filter > pre {
+	margin-top: 0.25em;
+}
