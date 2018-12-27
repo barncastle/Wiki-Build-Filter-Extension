@@ -1,6 +1,8 @@
 'use strict';
-var build_filter = {
-	blanklinemode: 0, // -1 = no formatting, 0 = remove all blank lines, 1 = allow single line spacing
+var build_filter = {
+
+	blanklinemode: 0, // -1 = no formatting, 0 = remove all blank lines, 1 = allow single line spacing
+
 	cache: {
 		data: [],
 
@@ -12,7 +14,8 @@ var build_filter = {
 			}
 			return entry;
 		}
-	},
+	},
+
 	imagelookup: [
 		'https://wowdev.wiki/images/8/8f/PreVanilla-Logo-Small.png',
 		'https://wowdev.wiki/images/5/54/Vanilla-Logo-Small.png',
@@ -23,7 +26,8 @@ var build_filter = {
 		'https://wowdev.wiki/images/7/71/WoD-Logo-Small.png',
 		'https://wowdev.wiki/images/f/fd/Legion-Logo-Small.png',
 		'https://wowdev.wiki/images/9/94/Battle-Logo-Small.png',
-    ],
+    ],
+
 	load: function() {
 		// bind the dropdown onchange event
 		$('.build-filter-select').each(function() {	
@@ -33,7 +37,8 @@ var build_filter = {
 			if($(this).val() !== '-1')
 				build_filter.onChangeEvent(this);
 		});
-	},
+	},
+
 	onChangeEvent: function(ele) {
 		var $this = $(ele);
 
