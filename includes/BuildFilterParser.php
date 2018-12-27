@@ -1,4 +1,5 @@
-<?php
+<?php
+
 /**
  * Filter Parser built for the parsing of the templates
  * to generate JSON conditions
@@ -35,12 +36,20 @@ class BuildFilterParser {
 		$this->content = preg_split('/\r\n|\r|\n/', $input);
 	
 		// Condition list
-		$conditions = array( new Condition() );
+		$conditions = array( new Condition() );
+
 		for( $i = 0; $i < count( $this->content ); $i++ ) {
 		
 			// extract the line, parse the content and store the expanded result
 			$line = $this->content[$i];
-			$template = $parser->replaceVariables( $line, $frame );			$template = $parser->doDoubleUnderscore( $template );			$template = $parser->doHeadings( $template );			$template = $parser->replaceInternalLinks( $template );			$template = $parser->doAllQuotes( $template );			$template = $parser->replaceExternalLinks( $template );			$template = $parser->doMagicLinks( $template );			
+			$template = $parser->replaceVariables( $line, $frame );
+			$template = $parser->doDoubleUnderscore( $template );
+			$template = $parser->doHeadings( $template );
+			$template = $parser->replaceInternalLinks( $template );
+			$template = $parser->doAllQuotes( $template );
+			$template = $parser->replaceExternalLinks( $template );
+			$template = $parser->doMagicLinks( $template );
+			
 			$this->content[$i] = $template;
 		
 			// if the template exists and is valid
@@ -106,13 +115,15 @@ class BuildFilterParser {
 				'max_exclusive' => false,
 				'min_expansionlevel' => -1,
 				'max_expansionlevel' => 99,
-			);
+			);
+
 			// extract each attribute and it's value
 			$attrcount = count( $matches[0] );
 			for( $i = 0; $i < $attrcount; $i++ ) {
 		
 				$attr = strtolower( $matches[1][$i] );
-				$val = $matches[2][$i];
+				$val = $matches[2][$i];
+
 				switch( $attr ) {
 					// condition
 					case 'condition':
@@ -159,12 +170,16 @@ class BuildFilterParser {
 				$condition->builds['max_build'] === '' &&
 				$attributes['min_expansionlevel'] === -1 &&
 				$attributes['max_expansionlevel'] === 99 )
-				return null;
+				return null;
+
 			// exclude exclusive-build combination
 			if( ( $condition->builds['min_build'] !== '' && $attributes['min_exclusive'] ) ||
 				( $condition->builds['max_build'] !== '' && $attributes['max_exclusive'] ) )
-				return null;
-			// append specified builds to the build list				// and convert expansions to build numbers			// Note: explicit builds take priority
+				return null;
+
+			// append specified builds to the build list	
+			// and convert expansions to build numbers
+			// Note: explicit builds take priority
 			$this->updateBuildList( $condition );
 			$this->convertExpansions( $condition, $attributes );
 					
@@ -186,7 +201,8 @@ class BuildFilterParser {
 	
 		$expansions = array_keys( $wgBuildFilterExpansions );
 		$maxbuilds = array_values( $wgBuildFilterExpansions );
-		$maxexp = count( $expansions );	
+		$maxexp = count( $expansions );
+	
 		foreach( array( 'min_build', 'max_build' ) as $attr ) {
 		
 			if( $condition->builds[$attr] === '' )
@@ -215,7 +231,8 @@ class BuildFilterParser {
 	*/
 	function convertExpansions( &$condition, &$attributes ) {	
 		global $wgBuildFilterExpansions;
-			$maxexp = count( $wgBuildFilterExpansions ) - 1;
+	
+		$maxexp = count( $wgBuildFilterExpansions ) - 1;
 		$maxbuilds = array_values( $wgBuildFilterExpansions );
 	
 		foreach( array( 'min', 'max' ) as $prefix ) {
@@ -240,7 +257,8 @@ class BuildFilterParser {
 			// set exp and build - major and minor are currently unused
 			$condition->builds[ $prefix . '_build' ] = "{$exp}.0.0.{$build}";
 		}
-	}
+	}
+
 	/**
 	 * @param &array $conditions
 	 * @return array $branch
@@ -280,7 +298,8 @@ class BuildFilterParser {
 	
 		// child branches must start with an if condition
 		if( !empty( $conditions ) && $ischild && $conditions[0]->condition !== 'if' )
-			return $branch;
+			return $branch;
+
 		while( !empty( $conditions ) ) {
 		
 			// <blank> starts a new branch
@@ -298,7 +317,8 @@ class BuildFilterParser {
 		
 			// apply nested conditions
 			$c->children = $this->nestedGroup( $conditions, true );
-		}
+		}
+
 		return $branch;
 	}
 

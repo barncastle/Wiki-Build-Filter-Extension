@@ -1,6 +1,6 @@
-<?php
+<?php
 include 'Condition.php';
-include 'BuildFilterParser.php';
+include 'BuildFilterParser.php';
 /**
  * Extension hooks
 */
@@ -94,13 +94,19 @@ class BuildFilterHooks {
 			$builds[$key] = "{$i}.{$build}";
 		}
 	
-		// sort by value		// TODO will need changing when the 10th exp is released
-		asort($builds);
+		// sort by value
+		// TODO will need changing when the 10th exp is released
+		asort($builds);
+
 		// prefix an All option and build the options html
 		$options = "<option value='-1'>All</option>\n";
-		foreach( $builds as $k=>$v ) {						$selected = ( substr( $v, -strlen( $wgBuildFilterDefaultBuild )) == $wgBuildFilterDefaultBuild ) ? 'selected' : '';					$options .= "<option value='{$v}' {$selected}>{$k}</option>\n";		}
+		foreach( $builds as $k=>$v ) {			
+			$selected = ( substr( $v, -strlen( $wgBuildFilterDefaultBuild )) == $wgBuildFilterDefaultBuild ) ? 'selected' : '';		
+			$options .= "<option value='{$v}' {$selected}>{$k}</option>\n";
+		}
 			
 		
 		return $options;
-	}
+	}
+
 }
